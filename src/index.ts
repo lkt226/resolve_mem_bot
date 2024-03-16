@@ -1,5 +1,5 @@
 import bot from "./config";
-import createEvents from "./events";
+import createEvents from "./features";
 
 let screaming = false;
 
