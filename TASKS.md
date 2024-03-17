@@ -1,6 +1,7 @@
 # Lista de requisitos e tarefas
 
 ## Requisitos funcionais
+- Verificar o id da conversa
 - Escolha aleatória das mensagens
 - Envio da mensagem
 - Guardar mensagem enviada
