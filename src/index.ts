@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import "./database";
+
 import bot from "./config";
 import createEvents from "./features";
 import sendMessage from "./features/sendMessage";
@@ -8,12 +10,12 @@ import sendMessage from "./features/sendMessage";
 let screaming = false;
 
 bot.command("scream", () => {
-   screaming = true;
- });
+  screaming = true;
+});
 
 bot.command("whisper", () => {
-   screaming = false;
- });
+  screaming = false;
+});
 
 createEvents(screaming)
 

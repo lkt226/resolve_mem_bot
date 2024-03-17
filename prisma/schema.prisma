@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model voiceMessage {
+  id            Int      @id @default(autoincrement())
+  chat_id       String
+  voice_url     String
+  transcription String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now())
+}
+
+model chat {
+  id         Int      @id @default(autoincrement())
+  chat_id    String   @unique
+  message    String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
