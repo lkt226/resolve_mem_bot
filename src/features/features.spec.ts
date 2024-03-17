@@ -1,5 +1,7 @@
 // Esse documento deve fazer a conexão entre as outras funcionalidades do projeto
 
+import 'dotenv/config'
+
 import getRandomMessage from './getRandomMessage'
 import sendMessage from './sendMessage'
 import getChatIdWithUser from './getChatIdWithUser'
@@ -39,7 +41,13 @@ describe('Integrate all functions', () => {
     expect(data).toContain(receivedMessage)
   })
 
-  it ('send message to user --> user receive one message', async () => {})
+  it ('send message to user --> user receive one message', async () => {
+    const initialMessage = 'message 1'
+    const chatIdTest = process.env.CHAT_ID_TEST || ''
+    const receivedMessage =  await sendMessage(chatIdTest, initialMessage)
+
+    expect(initialMessage).toBe(receivedMessage.text)
+  })
 
   it ('save message in database --> new message in database', () => {})
   it ('delete message after 1 second --> message deleted', () => {})
