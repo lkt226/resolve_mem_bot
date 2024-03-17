@@ -1,6 +1,7 @@
 // Esse documento deve fazer a conexão entre as outras funcionalidades do projeto
 
-import 'dotenv/config'
+import dotenv from 'dotenv'
+dotenv.config()
 
 import getRandomMessage from './getRandomMessage'
 import sendMessage from './sendMessage'
