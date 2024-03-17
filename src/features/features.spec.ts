@@ -49,16 +49,17 @@ describe('Integrate all functions', () => {
     expect(initialMessage).toBe(receivedMessage.text)
   })
 
-  it ('save message in database --> new message in database', () => {})
-  it ('delete message after 1 second --> message deleted', () => {})
-  it ('send a message to user in 2 second --> user receive one message', () => {})
+  // Vou precisar aprender a usar o banco de dados em testes
+  it.todo ('save message in database --> new message in database')
+  it.todo ('delete message after 1 second --> message deleted')
+  it.todo ('send a message to user in 2 second --> user receive one message')
   
-  it ('alert to user if he not send a message in 1 second --> user receive one message', () => {})
+  it.todo ('alert to user if he not send a message in 1 second --> user receive one message')
   
-  it ('receive a voice message by user --> has one .OGG archive in storage', () => {})
-  it ('transcription of voice message --> has one transcription in database', () => {})
-  it ('clear the storage --> storage is empty', () => {})
-  it ('validate the transcription --> transcription is correct', () => {})
+  it.todo ('receive a voice message by user --> has one .OGG archive in storage')
+  it.todo ('transcription of voice message --> has one transcription in database')
+  it.todo ('clear the storage --> storage is empty')
+  it.todo ('validate the transcription --> transcription is correct')
 
-  it ('create a report --> has one report in database', () => {})
+  it.todo ('create a report --> has one report in database')
 })
