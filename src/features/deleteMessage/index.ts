@@ -1,11 +1,9 @@
 import bot from "../../config"
-const chatId = process.env.CHAT_ID
 
-const deleteMessage = (messageId: number) => {
-  if(!chatId) return
-  bot.api.deleteMessage(chatId, messageId)
+const deleteMessage = async (chatId: string|number, messageId: number) => {
+  const message = await bot.api.deleteMessage(chatId, messageId)
 
-  return true
+  return message
 }
 
 export default deleteMessage

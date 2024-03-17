@@ -1,4 +1,5 @@
 import bot from "../config";
+import prisma from "../database";
 import getChatIdWithUser from "./getChatIdWithUser";
 
 import getFileVoice from "./getFileVoice";
@@ -13,7 +14,7 @@ const execute = (_: boolean) => {
       
       switch (message) {
         case "/hello":
-          getChatIdWithUser(ctx.message)
+          getChatIdWithUser(ctx.message, prisma)
           break;
 
         default:
