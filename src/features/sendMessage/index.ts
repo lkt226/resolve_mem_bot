@@ -1,11 +1,9 @@
 import bot from "../../config"
-const chatId = process.env.CHAT_ID
 
-const sendMessage = (text:string) => {
-  if(!chatId) return
-  bot.api.sendMessage(chatId, text)
+const sendMessage = async (chatId: string, text:string) => {
+  const message = await bot.api.sendMessage(chatId, text)
 
-  return true
+  return message
 }
 
 export default sendMessage
