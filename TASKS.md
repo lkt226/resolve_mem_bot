@@ -23,7 +23,5 @@
 
 ## Tarefas
 
-1. Dockerizar o projeto
-2. Adicionar um PostgreSQL
-3. Instalar um ORM (Prefer Prisma)
+1. Usar um banco de dados sem hospedagem
 2. Continuar os testes
