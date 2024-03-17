@@ -1,7 +1,7 @@
-import bot from "../config";
+import bot from "../../config";
 
 import { Voice } from "grammy/types";
-import consumeApi from "../utils/api";
+import consumeApi from "../../utils/api";
 
 const getFileVoiceUrl = async (voice: Voice) => {
     const file = await bot.api.getFile(voice.file_id)
@@ -20,3 +20,4 @@ const getFileVoice = async (voice: Voice) => {
 }
 
 export default getFileVoice;
+
