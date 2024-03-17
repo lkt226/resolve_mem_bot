@@ -22,3 +22,8 @@
 - Ranqueamento da minha evolução.
 
 ## Tarefas
+
+1. Dockerizar o projeto
+2. Adicionar um PostgreSQL
+3. Instalar um ORM (Preferência pelo Prisma)
+2. Continuar os testes
