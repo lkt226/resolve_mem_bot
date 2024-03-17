@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgresSQL:
+    image: postgres
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+    ports:
+      - "5433:5432"
+
+  bot:
+    image: node:21.2.0
+    build: '.'
+    working_dir: /usr/app
+    command: "npm run dev"
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgresSQL
+    volumes:
+      - .:/usr/app
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - BOT_TOKEN=${BOT_TOKEN}
+      - CHAT_ID_TEST=-4199884334
+    stdin_open: true
+    tty: true
