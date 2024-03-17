@@ -1,4 +1,5 @@
 import bot from "../config";
+import getChatIdWithUser from "./getChatIdWithUser";
 
 import getFileVoice from "./getFileVoice";
 
@@ -12,7 +13,7 @@ const execute = (_: boolean) => {
       
       switch (message) {
         case "/hello":
-          console.log("World")
+          getChatIdWithUser(ctx.message)
           break;
 
         default:
