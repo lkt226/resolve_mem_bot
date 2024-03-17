@@ -3,10 +3,12 @@
 ## Requisitos funcionais
 - Escolha aleatória das mensagens
 - Envio da mensagem
+- Guardar mensagem enviada
 - Apagar a mensagem depois de uns minutos
 - Questionamento periodico
-- Recebimento das respostas
-- Verificação das respostas
+- Recebimento das respostas em audio
+- Transcrição das respostas de audio para texto
+- Validação das respostas comparando os textos da transcrição com o da mensagem guardada
 - Relatório do diário.
 
 ## Requisitos não funcionais
