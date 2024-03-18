@@ -9,17 +9,17 @@ datasource db {
 
 model voiceMessage {
   id            Int      @id @default(autoincrement())
-  chat_id       String
+  chat_id       BigInt
   voice_url     String
-  transcription String
+  transcription String   @default("")
   created_at    DateTime @default(now())
   updated_at    DateTime @default(now())
 }
 
 model chat {
   id         Int      @id @default(autoincrement())
-  chat_id    String   @unique
-  message    String
+  chat_id    BigInt      @unique
+  message    String   @default("")
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 }
