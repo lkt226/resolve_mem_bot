@@ -1,8 +1,10 @@
 import bot from "../config";
 import prisma from "../database";
-import getChatIdWithUser from "./getChatIdWithUser";
+import getChatIdWithUser from "../features - (rascunho)/getChatIdWithUser";
+import getFileVoice from "../features - (rascunho)/getFileVoice";
+import Identifier from "./identifier";
 
-import getFileVoice from "./getFileVoice";
+const identifier = new Identifier(prisma)
 
 const execute = (_: boolean) => {
   bot.on("message", async (ctx) => {
@@ -11,17 +13,9 @@ const execute = (_: boolean) => {
 
     } else if (ctx.message?.text?.includes("/")){
       const message =  ctx.message.text
-      
-      switch (message) {
-        case "/hello":
-          getChatIdWithUser(ctx.message, prisma)
-          break;
 
-        default:
-          break;
-      }
+      identifier.handleIncomingMessage(ctx)
     }
-
   });
 }
 

@@ -1,8 +1,8 @@
 import prisma from "../../database"
 
-const getChatIdWithUser = async (chatId: string|number) => {
+const getChatIdWithUser = async (chatId: number) => {
   try {
-    const chat = await prisma.chat.create({ data: { chat_id: `${chatId}`, message: '' }})
+    const chat = await prisma.chat.create({ data: { chat_id: chatId, message: '' }})
     return chat
 
   } catch (error) {
