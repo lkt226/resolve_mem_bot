@@ -2,14 +2,17 @@
 
 ## Requisitos funcionais
 - Verificar o id da conversa
+
 - Escolha aleatória das mensagens
 - Envio da mensagem
 - Guardar mensagem enviada
 - Apagar a mensagem depois de uns minutos
 - Questionamento periodico
+
 - Recebimento das respostas em audio
 - Transcrição das respostas de audio para texto
 - Apagar o audio da resposta
+
 - Validação das respostas comparando os textos da transcrição com o da mensagem guardada
 - Relatório do diário.
 
