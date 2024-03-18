@@ -4,8 +4,8 @@ dotenv.config();
 import "./database";
 
 import bot from "./config";
-import createEvents from "./features";
-import sendMessage from "./features/sendMessage";
+import createEvents from "./services";
+import sendMessage from "./features - (rascunho)/sendMessage";
 
 let screaming = false;
 
