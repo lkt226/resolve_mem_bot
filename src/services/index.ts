@@ -1,20 +1,18 @@
 import bot from "../config";
 import prisma from "../database";
-import getChatIdWithUser from "../features - (rascunho)/getChatIdWithUser";
-import getFileVoice from "../features - (rascunho)/getFileVoice";
+import Collector from "./collector";
 import Identifier from "./identifier";
 
 const identifier = new Identifier(prisma)
+const collector = new Collector(prisma)
 
 const execute = (_: boolean) => {
   bot.on("message", async (ctx) => {
     if (ctx.message?.voice) {
-      await getFileVoice(ctx.message.voice)
+      await collector.handleAudioFromUser(ctx)
 
     } else if (ctx.message?.text?.includes("/")){
-      const message =  ctx.message.text
-
-      identifier.handleIncomingMessage(ctx)
+      await identifier.handleIncomingMessage(ctx)
     }
   });
 }

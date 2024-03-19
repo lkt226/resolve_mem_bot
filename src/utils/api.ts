@@ -1,11 +1,8 @@
 const bot_token = process.env.BOT_TOKEN;
 const baseURL = `https://api.telegram.org`
 
-const apiRoutes = {
-    getFile: async (file_path: string) => {
-        const url = `${baseURL}/file/bot${bot_token}/${file_path}`
-        return url
-    }
+const telegramRoutes = {
+    downloadVoiceFile: (file_path: string) => `${baseURL}/file/bot${bot_token}/${file_path}`
 }
 
-export default apiRoutes;
+export default telegramRoutes;
