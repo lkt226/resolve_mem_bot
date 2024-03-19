@@ -31,18 +31,18 @@ const context: (id:number) => Partial<Context> = (id) => ({
 })
 const chatIdTest = parseInt(process.env.CHAT_ID_TEST || '0')
 
-describe ('Rotinas do questionador', () => {
-  it ('Primeira pergunta do dia --> Primeira mensagem enviada com sucesso!', async () => {
+describe ('Rotinas para enviar a mensagem e fazer as perguntas', () => {
+  it ('Call handleIncomingMessage --> Primeira mensagem enviada com sucesso!', async () => {
     await identifier.handleIncomingMessage(context(chatIdTest) as Context)
     const questioner = new Questioner(phraseBank, prisma, chatIdTest)
     const response = await questioner.handleSendFirstMessage()
     
     expect(response).toBe('Primeira mensagem enviada com sucesso!')
 
-    await prisma.chat.deleteMany({ where: { chat_id: chatIdTest }})
-  })
+    await prisma.chat.deleteMany({ where: { chat_id: `${chatIdTest}` }})
+  }, 30000)
 
-  it ('Pergunta recorrente --> Mensagem enviada com sucesso!', async () => {
+  it ('Call handleSendRecorrentMessage --> Mensagem enviada com sucesso!', async () => {
     const questioner = new Questioner(phraseBank, prisma, chatIdTest)
     const response = await questioner.handleSendRecorrentMessage()
     

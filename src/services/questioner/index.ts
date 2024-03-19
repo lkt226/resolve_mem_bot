@@ -29,7 +29,7 @@ class Questioner {
 
   async setSelectedMessageInDatabase (message: string) {
     await this.prisma.chat.update({
-      where: { chat_id: this.chatId },
+      where: { chat_id: `${this.chatId}` },
       data: { message }
     })
   }

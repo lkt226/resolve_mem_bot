@@ -25,18 +25,18 @@ const context: (id:number) => Partial<Context> = (id) => ({
 })
 
 describe ('Rotina para descobrir o id do chat do usuário', () => {
-  it ('Novo usuário --> Usuário cadastrado com sucesso', async () => {
+  it ('Call handleIncomingMessage (New user) --> Usuário cadastrado com sucesso', async () => {
     const test = await identifier.handleIncomingMessage(context(123456789) as Context)
     expect(test).toBe('Usuário cadastrado com sucesso')
 
-    await prisma.chat.deleteMany({ where: { chat_id: 123456789 }})
+    await prisma.chat.deleteMany({ where: { chat_id: `${123456789}` }})
   })
   
-  it ('Usuário já cadastrado --> Usuário já está cadastrado', async () => {
+  it ('Call handleIncomingMessage (Old user) --> Usuário já está cadastrado', async () => {
     await identifier.handleIncomingMessage(context(987654321) as Context)
     const test = await identifier.handleIncomingMessage(context(987654321) as Context)
     expect(test).toBe('Usuário já está cadastrado')
 
-    await prisma.chat.deleteMany({ where: { chat_id: 987654321 }})
+    await prisma.chat.deleteMany({ where: { chat_id: `${987654321}` }})
   })
 })

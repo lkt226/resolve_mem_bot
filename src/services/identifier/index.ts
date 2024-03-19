@@ -11,12 +11,12 @@ class Identifier {
 
   async searchIdInDatabase (id:number) {
     return this.prisma.chat.findFirst({
-      where: { chat_id: id }
+      where: { chat_id: `${id}` }
     })
   }
 
   async createUserInDatabase (id:number) {
-    return this.prisma.chat.create({ data: { chat_id: id, message: '' }})
+    return this.prisma.chat.create({ data: { chat_id: `${id}`, message: '' }})
   }
 
   async handleIncomingMessage (context: Context) {
@@ -36,8 +36,12 @@ class Identifier {
 
       } else {
         const user = await this.createUserInDatabase(chat.id)
-        if (user) context.reply('Você foi cadastrado com sucesso')
-        return 'Usuário cadastrado com sucesso'
+
+        if (user) {
+          context.reply('Você foi cadastrado com sucesso')
+          return 'Usuário cadastrado com sucesso'
+        }
+        throw new Error('Erro ao cadastrar usuário')
       }
     }
   }
