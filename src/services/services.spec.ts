@@ -18,14 +18,15 @@ describe ('Rotina de execução padrão a aplicação', () => {
     it.todo ('Alertar o usuário caso ele não responda em alguns minutos')
   })
   
-  //Colector
-  it.todo ('Verificar se o usuário enviou um áudio')
-  it.todo ('Baixar o áudio enviado pelo usuário')
+  // Recomeçar daqui
+  //Collector
+  // it.todo ('Verificar se o usuário enviou um áudio')
+  // it.todo ('Baixar o áudio enviado pelo usuário')
 
   //Receiver
-  it.todo ('Transcrever o audio para texto')
-  it.todo ('Salvar o texto no banco de dados')
-  it.todo ('Delete o áudio do servidor')
+  // it.todo ('Transcrever o audio para texto')
+  // it.todo ('Salvar o texto no banco de dados')
+  // it.todo ('Delete o áudio do servidor')
 
   //Examiner
   describe('Ciclo de vida da análise da resposta no dia', () => {
