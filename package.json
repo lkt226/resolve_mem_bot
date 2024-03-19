@@ -5,15 +5,18 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",
-    "test": "jest --watchAll --coverage",
+    "test:command": "jest --watchAll --coverage",
+    "test": "docker-compose up",
     "build": "tsc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "5.11.0",
+    "docker-compose": "^0.24.7",
     "dotenv": "^10.0.0",
     "grammy": "^1.21.1",
+    "ibm-watson": "^8.0.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {

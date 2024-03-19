@@ -5,10 +5,10 @@ services:
     image: node:21.2.0
     build: '.'
     working_dir: /usr/app
-    command: "npm run dev"
+    command: "npm run test:command"
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
       - .:/usr/app
     env_file:
@@ -16,5 +16,8 @@ services:
     environment:
       - BOT_TOKEN=${BOT_TOKEN}
       - CHAT_ID_TEST=-4199884334
+      - IBM_WATSON_API_KEY=${IBM_WATSON_API_KEY}
+      - IBM_WATSON_SERVICE_URL=${IBM_WATSON_SERVICE_URL}
+      - DATABASE_URL=${DATABASE_URL}
     stdin_open: true
     tty: true
