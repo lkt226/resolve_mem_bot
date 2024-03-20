@@ -1,13 +1,15 @@
 import { Voice } from "grammy/types";
 import https from "https";
 import fs from "fs";
+import path from "path";
 
 import bot from "../../config";
 import telegramRoutes from "../../utils/api";
 import { Context } from "grammy";
 import { PrismaClient } from "@prisma/client";
+import axios from "axios";
 
-const audioPath = "./src/services/collector/cache/"
+const audioPath = path.join(__dirname, './cache/')
 
 class Collector {
   private prisma: PrismaClient
@@ -26,15 +28,10 @@ class Collector {
     return telegramRoutes.downloadVoiceFile(audio.file_path)
   }
 
-  downloadVoiceFile (url: string, chatId:number) {
-    const file = fs.createWriteStream(audioPath + chatId + '.ogg')
-
-    https.get(url, function(response) {
-      response.pipe(file)
-      file.on('finish', () => file.close())
-    })
-    
-    return file
+  async downloadVoiceFile (url: string, chatId:number) {
+    const response = await axios.get(url, { responseType: 'arraybuffer' });
+    fs.writeFileSync(audioPath + chatId + '.ogg', Buffer.from(response.data))
+    return true
   }
 
   async searchIdInDatabase (id:number) {
@@ -47,13 +44,23 @@ class Collector {
     return user
   }
 
-  async saveVoiceMessageInDatabase (chatId: number, voiceUrl: string, message: string) {
-    return await this.prisma.voiceMessage.create({
-      data: {
-        chat_id: `${chatId}`,
-        original_text: message,
-        voice_url: voiceUrl
-      }
+  async verifyIfVoiceMessageExists (chatId: number) {
+    const voiceMessage = await this.prisma.voiceMessage.findFirst({
+      where: {chat_id: `${chatId}`, voice_url: null},
+      orderBy: {created_at: 'desc'}
+    })
+
+    if (!voiceMessage) {
+      throw new Error('Voice not sended.')
+    }
+
+    return voiceMessage
+  }
+
+  async saveVoiceMessageInDatabase (voiceMessageId: number, voiceUrl: string) {
+    return this.prisma.voiceMessage.update({
+      where: { id: voiceMessageId },
+      data: { voice_url: voiceUrl }
     })
   }
 
@@ -63,12 +70,12 @@ class Collector {
     }
     
     const { voice, chat } = context.message
-    const db = await this.searchIdInDatabase(chat.id)
+    const voiceMessage = await this.verifyIfVoiceMessageExists(chat.id)
     const downloadUrl = await this.getFileVoiceUrl(voice.file_id)
-    this.downloadVoiceFile(downloadUrl, chat.id)
-    const voiceMessage = await this.saveVoiceMessageInDatabase(chat.id, downloadUrl, db?.message||'')
+    await this.downloadVoiceFile(downloadUrl, chat.id)
+    const updatedVoiceMessage = await this.saveVoiceMessageInDatabase(voiceMessage.id, downloadUrl)
 
-    return voiceMessage
+    return updatedVoiceMessage
   }
 }
 
