@@ -26,3 +26,7 @@
 - Ranqueamento da minha evolução.
 
 ## Tarefas
+
+[] Mudar o Watson para o OpenAI
+[] Mudar banco de dados para Postgres
+[] Colocar Cron-jobs para rodar (Atualmente rodando em Timeout)
