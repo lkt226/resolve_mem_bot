@@ -10,7 +10,7 @@ datasource db {
 model voiceMessage {
   id            Int      @id @default(autoincrement())
   chat_id       String
-  voice_url     String
+  voice_url     String?
   original_text String
   transcription String   @default("")
   created_at    DateTime @default(now())
