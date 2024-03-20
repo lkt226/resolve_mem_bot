@@ -18,6 +18,6 @@ services:
       - CHAT_ID_TEST=-4199884334
       - IBM_WATSON_API_KEY=${IBM_WATSON_API_KEY}
       - IBM_WATSON_SERVICE_URL=${IBM_WATSON_SERVICE_URL}
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL="file:.:/usr/app/test.db"
     stdin_open: true
     tty: true

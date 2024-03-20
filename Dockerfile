@@ -3,15 +3,18 @@ FROM node:21.2.0
 WORKDIR /usr/app
 
 COPY package.json ./
+COPY package-lock.json ./
 
-RUN dir
-
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-EXPOSE 3001
+ENV DATABASE_URL=".:/usr/app/file:.test.db"
+
+RUN npx prisma generate
 
 RUN npx prisma migrate dev
+
+EXPOSE 3001
 
 CMD npm run test:command
