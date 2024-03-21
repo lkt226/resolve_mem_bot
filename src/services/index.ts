@@ -1,10 +1,12 @@
 import prisma from "../database";
 import bot from "../config";
+import cron from 'node-cron'
 
 import Identifier from "./identifier";
 import Questioner from "./questioner";
 import Collector from "./collector";
 import Receiver from "./receiver";
+import commands from "./commands";
 
 const identifier = new Identifier(prisma)
 const collector = new Collector(prisma)
@@ -48,13 +50,23 @@ const execute = () => {
     }
 
     if (context.message?.text?.includes("/")){
-      await identifier.handleIncomingMessage(context)
+      const command = context.message.text
+
+      if (command === commands.getChatId) {
+        await identifier.handleIncomingMessage(context)
+      }
+
+      if (command === commands.startFirstMessageInDay) {
+        await routineForFirstMessageInDay()
+      }
     }
   })
   
-  setTimeout(routineForFirstMessageInDay, 1000)
-  
-  // setInterval(routineForRecurrentMessage, 1000 * 30) // 30 seconds
+  cron.schedule('0 9 * * *', routineForFirstMessageInDay)
+  cron.schedule('0 10 * * *', routineForRecurrentMessage)
+  cron.schedule('0 13 * * *', routineForRecurrentMessage)
+  cron.schedule('0 16 * * *', routineForRecurrentMessage)
+  cron.schedule('0 21 * * *', routineForRecurrentMessage)
 }
 
 export default execute
