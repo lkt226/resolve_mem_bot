@@ -17,8 +17,8 @@
     "docker-compose": "^0.24.7",
     "dotenv": "^10.0.0",
     "grammy": "^1.21.1",
-    "ibm-watson": "^8.0.0",
     "node-cron": "^3.0.3",
+    "openai": "^4.29.2",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {

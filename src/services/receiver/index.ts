@@ -1,16 +1,11 @@
-import SpeechToTextV1 from 'ibm-watson/speech-to-text/v1'
-import { IamAuthenticator } from 'ibm-watson/auth'
+import OpenAI from "openai";
 
 import fs from 'fs'
 import path from 'path'
 import { PrismaClient } from '@prisma/client'
+import { FsReadStream } from "openai/_shims";
 
-const speechToText = new SpeechToTextV1({
-  authenticator: new IamAuthenticator({
-    apikey: process.env.IBM_WATSON_API_KEY || ''
-  }),
-  serviceUrl: process.env.IBM_WATSON_SERVICE_URL,
-})
+const openai = new OpenAI();
 
 const audioPath = path.join(__dirname, '../collector/cache/')
 
@@ -21,22 +16,17 @@ class Receiver {
     this.prisma = prisma
   }
 
-  async transcribeAudio (audio: Buffer) {
-    if (!audio) {
-      throw new Error('No audio found.')
-    }
-
-    const response = await speechToText.recognize({
-      audio,
-      contentType: 'audio/ogg;codecs=opus',
-      model: 'pt-BR_Multimedia',
+  async transcribeAudio (audio: FsReadStream) {
+    const response = await openai.audio.transcriptions.create({
+      file: audio,
+      model: 'whisper-1'
     })
 
-    if (!response.result.results) {
+    if (!response.text) {
       throw new Error('No results found.')
     }
 
-    const transcription = response.result.results[0].alternatives[0].transcript
+    const transcription = response.text
     return transcription
   }
 
@@ -67,14 +57,14 @@ class Receiver {
     }
 
     const { chat_id: chatId } = voiceMessage
-    
-    fs.readFile(`${audioPath}${chatId}.ogg`, async (error, audio) => {
-      if (error) { throw new Error('Audio not found.') }
 
-      const transcription = await this.transcribeAudio(audio)
-      await this.updateVoiceMessageTranscription(voiceMessageId, transcription)
-      fs.rm(`${audioPath}${chatId}.ogg`, () => {})
-    })
+    const audio = fs.createReadStream(`${audioPath}${chatId}.ogg`)
+
+    const transcription = await this.transcribeAudio(audio)
+
+    await this.updateVoiceMessageTranscription(voiceMessageId, transcription)
+    
+    fs.rm(`${audioPath}${chatId}.ogg`, () => {})
 
     return voiceMessage.transcription
   }
