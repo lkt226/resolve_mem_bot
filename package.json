@@ -7,7 +7,7 @@
     "dev": "ts-node-dev ./src/index.ts",
     "test:command": "jest --watchAll --coverage",
     "test": "docker-compose up --build",
-    "build": "tsc",
+    "build": "tsc && prisma migrate dev",
     "start": "node ./src/index.js"
   },
   "author": "",
