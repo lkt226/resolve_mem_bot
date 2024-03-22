@@ -1,23 +1,13 @@
 version: '3.8'
 
 services:
-  development:
-    image: node:21.2.0
-    build: '.'
-    working_dir: /usr/app
-    command: "npm run test:command"
-    restart: unless-stopped
-    ports:
-      - "3001:3001"
-    volumes:
-      - .:/usr/app
-    env_file:
-      - ./.env
+  postgres:
+    image: postgres:12
     environment:
-      - BOT_TOKEN=${BOT_TOKEN}
-      - CHAT_ID_TEST=-4199884334
-      - IBM_WATSON_API_KEY=${IBM_WATSON_API_KEY}
-      - IBM_WATSON_SERVICE_URL=${IBM_WATSON_SERVICE_URL}
-      - DATABASE_URL="file:.:/usr/app/test.db"
-    stdin_open: true
-    tty: true
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin12345
+      POSTGRES_DB: resolve_mem_bot
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
