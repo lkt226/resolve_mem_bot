@@ -3,3 +3,4 @@
 .env
 /**/cache/*.ogg
 dev.db
+/**/*.js
