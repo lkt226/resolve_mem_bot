@@ -10,7 +10,8 @@ import Routines from "./services/index"
 
 //Start the Bot
 (async () => {
-  await bot.start()
-  Routines()
-  console.log("Bot iniciado")
-})()
+  bot.start({ onStart: () => {
+    Routines()
+    console.log("Bot iniciado")
+  }, drop_pending_updates: true })
+})
