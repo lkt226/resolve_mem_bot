@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import { PrismaClient } from '@prisma/client'
 import { FsReadStream } from "openai/_shims";
+import axios from "axios";
 
 const openai = new OpenAI();
 
@@ -52,19 +53,16 @@ class Receiver {
   async handleAudioTranscription (voiceMessageId: number) {
     const voiceMessage = await this.getVoiceMessageInDatabase(voiceMessageId)
 
-    if (!voiceMessage) {
+    if (!voiceMessage || !voiceMessage.voice_url) {
       throw new Error('Voice message not found.')
     }
 
-    const { chat_id: chatId } = voiceMessage
-
-    const audio = fs.createReadStream(`${audioPath}${chatId}.ogg`)
+    const url = (await axios.get(voiceMessage.voice_url)).data
+    const audio = fs.createReadStream(url)
 
     const transcription = await this.transcribeAudio(audio)
 
     await this.updateVoiceMessageTranscription(voiceMessageId, transcription)
-    
-    fs.rm(`${audioPath}${chatId}.ogg`, () => {})
 
     return voiceMessage.transcription
   }

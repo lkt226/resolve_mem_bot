@@ -70,7 +70,7 @@ class Collector {
     const { voice, chat } = context.message
     const voiceMessage = await this.verifyIfVoiceMessageExists(chat.id)
     const downloadUrl = await this.getFileVoiceUrl(voice.file_id)
-    await this.downloadVoiceFile(downloadUrl, chat.id)
+    // await this.downloadVoiceFile(downloadUrl, chat.id)
     const updatedVoiceMessage = await this.saveVoiceMessageInDatabase(voiceMessage.id, downloadUrl)
 
     return updatedVoiceMessage
